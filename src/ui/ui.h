@@ -31,9 +31,13 @@ extern lv_obj_t * ui_btnCount;
 extern lv_obj_t * ui_lblButton;
 extern lv_obj_t * ui_lblCount;
 extern lv_obj_t * ui_lblCountValue;
+extern lv_obj_t * ui_lblWifiSSID;
+extern lv_obj_t * ui_lblWifiSsidValue;
+extern lv_obj_t * ui_lblWifiPASS;
+extern lv_obj_t * ui_lblWifiPassValue;
 extern lv_obj_t * ui_Image1;
 extern lv_obj_t * ui____initial_actions0;
-
+extern lv_obj_t * ui_AP_list;
 
 LV_IMG_DECLARE(ui_img_philips_80x106_png);    // assets/Philips_80x106.png
 

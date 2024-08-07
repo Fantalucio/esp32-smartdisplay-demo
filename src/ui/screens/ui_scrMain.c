@@ -82,6 +82,38 @@ void ui_scrMain_screen_init(void)
     lv_obj_set_align(ui_lblCountValue, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_lblCountValue, "0");
 
+    ui_lblWifiSSID = lv_label_create(ui_pnlMain);
+    lv_obj_set_width(ui_lblWifiSSID, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_lblWifiSSID, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_lblWifiSSID, 0);
+    lv_obj_set_y(ui_lblWifiSSID, 90);
+    lv_label_set_text(ui_lblWifiSSID, "Wifi SSID:\n");
+
+    ui_lblWifiSsidValue = lv_label_create(ui_lblWifiSSID);
+    lv_obj_set_width(ui_lblWifiSsidValue, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_lblWifiSsidValue, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_lblWifiSsidValue, 120);
+//    lv_obj_set_y(ui_lblWifiSsidValue, 90);
+//    lv_obj_set_align(ui_lblWifiSsidValue, LV_ALIGN_TOP_MID);
+    lv_label_set_text(ui_lblWifiSsidValue, "SSID\n");
+    
+
+    ui_lblWifiPASS = lv_label_create(ui_pnlMain);
+    lv_obj_set_width(ui_lblWifiPASS, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_lblWifiPASS, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_lblWifiPASS, 0);
+    lv_obj_set_y(ui_lblWifiPASS, 120);
+    lv_label_set_text(ui_lblWifiPASS, "Wifi Password:\n");
+    
+    ui_lblWifiPassValue = lv_label_create(ui_lblWifiPASS);
+    lv_obj_set_width(ui_lblWifiPassValue, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_lblWifiPassValue, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_lblWifiPassValue, 120);
+//    lv_obj_set_y(ui_lblWifiPassValue, 120);
+//    lv_obj_set_align(ui_lblWifiPassValue, LV_ALIGN_RIGHT_MID);
+    lv_label_set_text(ui_lblWifiPassValue, "Password\n");
+
+
     ui_Image1 = lv_img_create(ui_pnlMain);
     lv_img_set_src(ui_Image1, &ui_img_philips_80x106_png);
     lv_obj_set_width(ui_Image1, LV_SIZE_CONTENT);   /// 1
@@ -92,5 +124,14 @@ void ui_scrMain_screen_init(void)
 
     lv_obj_add_event_cb(ui_Rotate, ui_event_Rotate, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_btnCount, ui_event_btnCount, LV_EVENT_ALL, NULL);
+
+
+    /* create Wifi List */
+    ui_AP_list = lv_list_create(ui_pnlMain);
+    lv_obj_set_size(ui_AP_list, 300, 250);
+    //lv_obj_center(ui_AP_list);
+    lv_obj_set_pos(ui_AP_list, 150, 150);
+    lv_list_add_text(ui_AP_list, "Avaiable access point");   
+    
 
 }

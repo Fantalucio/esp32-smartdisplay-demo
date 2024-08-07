@@ -1,0 +1,45 @@
+{
+	"folders": [
+		{
+			"path": "../../Blink_platformIO_ESP"
+		},
+		{
+			"name": "Esp32_IDF",
+			"path": "../../Esp32_IDF"
+		},
+		{
+			"name": "240711-091909-espidf-peripherals-uart",
+			"path": "../../240711-091909-espidf-peripherals-uart"
+		},
+		{
+			"name": "240711-092036-espidf-arduino-wifiscan",
+			"path": "../../240711-092036-espidf-arduino-wifiscan"
+		},
+		{
+			"name": "esp32-smartdisplay-demo",
+			"path": ".."
+		},
+		{
+			"name": "Sunton_800x400",
+			"path": "../../Sunton_800x400"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"ui_events.h": "c",
+			"lvgl.h": "c",
+			"charconv": "c",
+			"array": "cpp",
+			"deque": "cpp",
+			"list": "cpp",
+			"string": "cpp",
+			"unordered_map": "cpp",
+			"unordered_set": "cpp",
+			"vector": "cpp",
+			"string_view": "cpp",
+			"format": "cpp",
+			"initializer_list": "cpp",
+			"span": "cpp"
+		}
+	}
+}

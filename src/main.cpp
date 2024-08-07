@@ -1,9 +1,51 @@
+
+#include <stdio.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include "sdkconfig.h"
+#include <WiFi.h>
+
 #include <Arduino.h>
 
 #include <esp32_smartdisplay.h>
 #include <ui/ui.h>
 
 #include <src/extra/libs/qrcode/lv_qrcode.h>
+
+#include "comm.h"
+
+
+WIFI_taskData_t *wifiData;
+CONN_taskData_t *connData;
+
+
+/* void wifiScan()
+{
+    // WiFi.scanNetworks will return the number of networks found
+    int n = WiFi.scanComplete();
+    if (n == WIFI_SCAN_FAILED)
+    {
+        Serial.println("Scan failed");
+        WiFi.scanNetworks(true);
+    }
+    else if (n >= 0)
+    {
+
+        char text_buffer[32];
+
+        String ssidString = WiFi.SSID(0);
+        ssidString.toCharArray(text_buffer, ssidString.indexOf("\n"));
+        lv_label_set_text(ui_lblWifiSsidValue, text_buffer);
+
+        // Serial.printf("Found %d networks\n", n);
+        for (int i = 0; i < 2; ++i)
+        {
+            sprintf(text_buffer, "%d: %s, RSSI: %d\n", i + 1, WiFi.SSID(i).c_str(), WiFi.RSSI(i));
+            lv_list_add_btn(ui_wifiList, LV_SYMBOL_WIFI, text_buffer);
+        }
+        WiFi.scanNetworks(true);
+    }
+} */
 
 void OnAddOneClicked(lv_event_t *e)
 {
@@ -24,6 +66,14 @@ void setup()
 #ifdef ARDUINO_USB_CDC_ON_BOOT
     delay(5000);
 #endif
+
+    // Set WiFi to station mode and disconnect from an AP if it was previously connected
+    //    WiFi.mode(WIFI_STA);
+    //   WiFi.disconnect();
+
+    wifiData = wifiTaskInit();
+    connData = CONN_taskInit();
+
     Serial.begin(115200);
     Serial.setDebugOutput(true);
     log_i("Board: %s", BOARD_NAME);
@@ -44,22 +94,39 @@ void setup()
     // To use third party libraries, enable the define in lv_conf.h: #define LV_USE_QRCODE 1
     auto ui_qrcode = lv_qrcode_create(ui_scrMain, 100, lv_color_black(), lv_color_white());
     const char *qr_data = "https://github.com/rzeldent/esp32-smartdisplay";
+    lv_obj_set_pos(ui_qrcode, 650, 240);
+    //        lv_obj_set_x(ui_qrcode, 350);
+    //    lv_obj_set_y(ui_qrcode, 300);
     lv_qrcode_update(ui_qrcode, qr_data, strlen(qr_data));
-    lv_obj_center(ui_qrcode);
+    //    lv_obj_center(ui_qrcode);
 }
 
 ulong next_millis;
 
 void loop()
 {
+
+    manage_WIFI();
+    manage_connection();
+
     auto const now = millis();
     if (now > next_millis)
     {
-        next_millis = now + 500;
+        next_millis = now + 1000;
+
+        // wifiScan();
+
+        // Wait a bit before scanning again
 
         char text_buffer[32];
         sprintf(text_buffer, "%lu", now);
         lv_label_set_text(ui_lblMillisecondsValue, text_buffer);
+
+        /*
+                String ssidString = WiFi.SSID(0);
+                ssidString.toCharArray(text_buffer, ssidString.indexOf("\n"));
+                lv_label_set_text(ui_lblWifiSsidValue,text_buffer);
+        */
 
 #ifdef BOARD_HAS_RGB_LED
         auto const rgb = (now / 2000) % 8;
